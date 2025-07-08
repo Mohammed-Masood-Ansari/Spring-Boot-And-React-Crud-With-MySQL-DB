@@ -1,0 +1,77 @@
+import React, {useEffect, useState} from 'react'
+import { listCollege } from '../services/CollegeServices'
+import { useNavigate } from 'react-router-dom'
+
+const CollegeList = () => {
+
+    //call rest api to fetch all college data
+    const [colleges, setCollege] = useState([])
+
+    const navigator = useNavigate();
+    
+
+    useEffect(()=>{
+        listCollege().then((Response)=>{
+            setCollege(Response.data);
+        }).catch(error=>console.error(error))
+    }, [])
+
+
+    //dummy data 
+    // const dummyData=[
+
+    //     {
+    //         "collegeId":"123",
+    //         "collegeName":"HKBK COLLEGE OF ENGINEERING",
+    //         "collegeAddress":"Govindpura Bangalore Near Manyata Tech Park",
+    //         "collegePinCode":"560045"
+    //     },
+    //     {
+    //         "collegeId":"124",
+    //         "collegeName":"KNSIT COLLEGE OF ENGINEERING",
+    //         "collegeAddress":"Maleshawaram",
+    //         "collegePinCode":"560071"
+    //     }
+    
+    // ]
+
+    //function will call addcollege.jsx to register college
+    function addNewCollege(){
+      navigator('/add-college');
+    }
+
+  return (
+    <div className='container'>
+        <h2 className='text-center'>List Of Colleges</h2>
+        <button className="btn btn-primary" onClick={addNewCollege}>AddCollege</button>
+        <table className='table table-striped table-bordered'>
+            <thead>
+                <tr>
+                    <th>CollegeId</th>
+                    <th>CollegeName</th>
+                    <th>CollegeAddress</th>
+                    <th>CollegePinCode</th>
+                    <th colSpan={2}>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    colleges.map(college=>
+
+                <tr key={college.collegeId}>
+                    <td>{college.collegeId}</td>
+                    <td>{college.collegeName}</td>
+                    <td>{college.collegeAddress}</td>
+                    <td>{college.collegePinCode}</td>
+                    <td>DELETE</td>
+                    <td>EDIT</td>
+                </tr>
+                )
+                }
+            </tbody>
+        </table>
+    </div>
+  )
+}
+
+export default CollegeList
