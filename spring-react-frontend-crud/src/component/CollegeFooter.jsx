@@ -1,13 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 const CollegeFooter = () => {
   return (
-    <div>
-      <footer className='footer'>
-       <span>All right reserved 2025 by Mazhar-Corporation-Limited</span>
-      </footer>
-    </div>
-  )
-}
+    <footer className="footer bg-dark text-center py-3">
+      <span>© 2025 Mazhar Corporation Limited. All rights reserved.</span>
+    </footer>
+  );
+};
 
-export default CollegeFooter
+export default CollegeFooter;

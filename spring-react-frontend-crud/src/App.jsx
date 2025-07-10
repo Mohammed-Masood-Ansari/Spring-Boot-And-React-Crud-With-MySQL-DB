@@ -22,6 +22,8 @@ function App() {
           <Route path='/colleges' element={<CollegeList/>}></Route>
 
            <Route path='/add-college' element={<CollegeRegistration/>}></Route>
+
+           <Route path='/edit-college/:id' element={<CollegeRegistration/>}></Route>
        </Routes>
        <CollegeFooter/>
       </BrowserRouter>

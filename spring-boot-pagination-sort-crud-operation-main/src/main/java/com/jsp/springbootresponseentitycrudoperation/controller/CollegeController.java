@@ -7,9 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +38,13 @@ public class CollegeController {
 		return collegeService.saveCollege(college);
 	}
 
+	@PutMapping("/updateCollege/{id}")
+	// insertMethod For College
+	public ResponseStructure<College> updateCollege(@RequestBody College college,@PathVariable(name = "id") int id) {
+
+		return collegeService.updateCollege(college,id);
+	}
+
 	@GetMapping("/getById/{id}")
 	// getById for College
 	public ResponseStructure<College> getById(@PathVariable int id) throws IdNotFoundException {
@@ -45,11 +54,15 @@ public class CollegeController {
 		return structure;
 	}
 
-	@GetMapping("getByIdNative/{id}")
+	@GetMapping("/getByIdNative/{id}")
 	// getById NativeQuery
-	public College getByIdNative(@PathVariable int id) {
+	public College getByIdNative(@PathVariable(name = "id") int id) {
 
-		return collegeService.getByIdNative(id);
+		College college=collegeService.getByIdNative(id);
+
+		System.out.println(college);
+
+		return college;
 	}
 
 	@GetMapping("/getByName/{name}")
@@ -112,5 +125,10 @@ public class CollegeController {
 		responseStructure.setData(colleges);
 		
 		return responseStructure;
+	}
+
+	@DeleteMapping(value = "/deleteCollege/{collegeId}")
+	public boolean deleteCollegeByIdController(@PathVariable(name = "collegeId") int collegeId){
+		return collegeService.deleteCollegeByIdDao(collegeId);
 	}
 }

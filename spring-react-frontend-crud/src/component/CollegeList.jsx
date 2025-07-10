@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { listCollege } from '../services/CollegeServices'
+import { deleteCollegeById, listCollege } from '../services/CollegeServices'
 import { useNavigate } from 'react-router-dom'
 
 const CollegeList = () => {
@@ -11,11 +11,14 @@ const CollegeList = () => {
     
 
     useEffect(()=>{
-        listCollege().then((Response)=>{
-            setCollege(Response.data);
-        }).catch(error=>console.error(error))
+      getAllEmployees();
     }, [])
 
+    function getAllEmployees(){
+          listCollege().then((Response)=>{
+            setCollege(Response.data);
+        }).catch(error=>console.error(error))
+    }
 
     //dummy data 
     // const dummyData=[
@@ -38,6 +41,20 @@ const CollegeList = () => {
     //function will call addcollege.jsx to register college
     function addNewCollege(){
       navigator('/add-college');
+    }
+
+    function editCollege(id){
+      navigator(`/edit-college/${id}`);
+    }
+
+    function deleteCollege(id){
+       console.log(id);
+
+       deleteCollegeById(id).then((response)=>{
+           getAllEmployees();
+       }).catch(error=>{
+         console.error(error);
+       })
     }
 
   return (
@@ -63,8 +80,12 @@ const CollegeList = () => {
                     <td>{college.collegeName}</td>
                     <td>{college.collegeAddress}</td>
                     <td>{college.collegePinCode}</td>
-                    <td>DELETE</td>
-                    <td>EDIT</td>
+                    <td>
+                        <button className='btn btn-danger' onClick={()=>deleteCollege(college.collegeId)}>DELETE</button>
+                    </td>
+                    <td>
+                        <button className='btn btn-info' onClick={()=>editCollege(college.collegeId)}>EDIT</button>
+                    </td>
                 </tr>
                 )
                 }

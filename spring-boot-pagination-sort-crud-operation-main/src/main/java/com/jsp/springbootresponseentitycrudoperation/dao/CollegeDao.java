@@ -23,6 +23,10 @@ public class CollegeDao {
 		return collegeRepository.save(college);
 	}
 
+	public College updateCollege(College college,int id) {
+		return collegeRepository.save(college);
+	}
+
 	// getById for College
 	public College getById(int id) {
 
@@ -89,6 +93,16 @@ public class CollegeDao {
 		Page<College> colleges = collegeRepository.findAll(PageRequest.of(pageSize, pageSize).withSort(Sort.by(field)));
 		
 		return colleges;
+	}
+
+	public boolean deleteCollegeByIdDao(int collegeId){
+		College college=collegeRepository.findById(collegeId).orElseThrow(()->new RuntimeException("resource not found"));
+		if(college!=null){
+			collegeRepository.delete(college);
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 }

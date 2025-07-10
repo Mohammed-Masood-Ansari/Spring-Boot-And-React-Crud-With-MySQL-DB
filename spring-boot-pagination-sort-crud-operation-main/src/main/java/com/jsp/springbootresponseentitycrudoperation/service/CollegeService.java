@@ -39,6 +39,22 @@ public class CollegeService {
 		return responseStructure;
 	}
 
+
+	// insertMethod For College
+	public ResponseStructure<College> updateCollege(College college,int id) {
+
+		College college2 = collegeDao.saveCollege(college);
+
+		if (college2 != null) {
+
+			responseStructure.setStatusCode(HttpStatus.CREATED.value());
+			responseStructure.setMessage("Successfully Data is updated");
+			responseStructure.setData(college2);
+		}
+
+		return responseStructure;
+	}
+
 	// getById for College
 	public ResponseStructure<College> getById(int id) throws IdNotFoundException {
 
@@ -107,6 +123,10 @@ public class CollegeService {
 		Page<College> colleges = collegeDao.findCollegeWithPaginationWithSort(offset,pageSize,field);
 
 		return colleges;
+	}
+
+	public boolean deleteCollegeByIdDao(int collegeId){
+		return collegeDao.deleteCollegeByIdDao(collegeId);
 	}
 
 }
